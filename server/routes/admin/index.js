@@ -1,5 +1,7 @@
 module.exports = app =>{
     const express = require('express')
+    const jwt = require('jsonwebtoken')
+    const AdminUser = require('../../models/AdminUser')
     const router = express.Router({
         mergeParams: true       //合并参数
     })
@@ -24,7 +26,13 @@ module.exports = app =>{
         })
     })
     //获取分类数据（每页10条数据）
-    router.get('/', async (req,res)=>{
+    router.get('/', async (req,res,next)=>{
+        const token = String(req.headers.authorization || '').split(' ').pop();
+        const {id} = jwt.verify(token, app.get('secret'))
+        req.user = await AdminUser.findById(id);
+        console.log(req.user);
+        await next();
+    }, async (req,res)=>{
         let quertOptions = {}
         switch(req.Model.modelName){
             case 'Category':
@@ -58,9 +66,7 @@ module.exports = app =>{
     app.post('/admin/api/login', async (req, res) => {
         const { username,password } = req.body;
         //1.根据用户名找用户
-        const AdminUser = require('../../models/AdminUser');
         const user = await AdminUser.findOne({username}).select('+password');
-        console.log(user);
         if(!user){
             return res.status(422).send({
                 message: '用户名不存在'
@@ -74,7 +80,6 @@ module.exports = app =>{
             })
         } 
         //3.返回token
-        const jwt = require('jsonwebtoken');
         const token = jwt.sign({id: user._id}, app.get('secret'))
         res.send({
             'token':token,
