@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Vue from 'vue'
+import router from './router'
 const http = axios.create({
     baseURL: 'http://localhost:3000/admin/api/'
 })
@@ -7,7 +8,9 @@ const http = axios.create({
 // Add a request interceptor
 http.interceptors.request.use(function (config) {
     // Do something before request is sent
-    config.headers.Authorization = 'Bearer ' + localStorage.token;
+    if(localStorage.token){
+        config.headers.Authorization = 'Bearer ' + (localStorage.token || '');
+    }
     return config;
 }, function (error) {
     // Do something with request error
@@ -22,6 +25,10 @@ http.interceptors.response.use(res => {
             type:'error',
             message:err.response.data.message
         })
+    }
+    //拦截报错，状态码为 401 统一跳转到登录页
+    if(err.response.status === 401){
+        router.push('/login')
     }
     return Promise.reject(err);
 })
