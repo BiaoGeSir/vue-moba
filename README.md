@@ -1,2 +1,2 @@
 # vue-moba
-vue+node移动端页面
+vue+node学习
