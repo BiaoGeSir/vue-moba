@@ -70,6 +70,10 @@ $color in $colors {
   flex-direction: column;
 }
 
+//flex 换行
+.flex-wrap{
+  flex-wrap: wrap;
+}
 
 @each $key,$value in $flex-jc {
   .jc-#{$key} {
@@ -139,5 +143,22 @@ $color in $colors {
     &.active{
       border-bottom: 3px solid #fff;
     }
+  }
+}
+
+//sprite
+.sprite{
+	background: url(../images/sprite.png) 0 0 no-repeat;
+  background-size: 28.8462rem;
+  display: inline-block;
+  &.sprite-news{
+    width: 1.7692rem;
+    height: 1.5385rem;
+    background-position: 63.546% 15.517%;
+  }
+  &.sprite-arrow{
+    width: 0.7692rem;
+    height: 0.7692rem;
+    background-position: 38.577% 52.076%;
   }
 }
