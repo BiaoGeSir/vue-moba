@@ -9,4 +9,7 @@ module.exports = app =>{
     mongoose.connect('mongodb://'+ip+':'+port+'/'+dbName,{
         useNewUrlParser: true
     })
+
+    //引用指定文件夹下的所有model模型
+    require('require-all')(__dirname + '/../models');
 }
