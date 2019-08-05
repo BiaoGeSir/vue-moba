@@ -2,7 +2,9 @@ module.exports = app =>{
     const express = require('express')
     const jwt = require('jsonwebtoken')
     const assert = require('http-assert')
-    const AdminUser = require('../../models/AdminUser')
+    // const AdminUser = require('../../models/AdminUser')
+    const mongoose = require('mongoose')
+    const AdminUser = mongoose.model('AdminUser')
     const router = express.Router({
         mergeParams: true       //合并参数
     })
@@ -26,7 +28,7 @@ module.exports = app =>{
             success: true
         })
     })
-    //获取分类数据（每页10条数据）
+    //获取分类数据（每页xxx条数据）
     router.get('/', async (req,res)=>{
         let quertOptions = {}
         switch(req.Model.modelName){
@@ -34,7 +36,7 @@ module.exports = app =>{
                 quertOptions.populate = 'parent'
                 break;
         }
-        const items = await req.Model.find().populate('parent').limit(10)
+        const items = await req.Model.find().populate('parent').limit(10000)
         res.send(items)
     })
 
