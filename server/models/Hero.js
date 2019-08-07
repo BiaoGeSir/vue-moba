@@ -8,6 +8,9 @@ const schema = new mongoose.Schema({
     avatar: {  //头像
         type: String
     },
+		banner: {	 //英雄背景图
+				type: String
+		},
     title: {   //称号
         type: String
     },
@@ -18,16 +21,16 @@ const schema = new mongoose.Schema({
         }
     ],
     scores: {    //生存分数
-        difficult: {
+        difficult: {	//难度
             type: Number
         },
-        skills: {
+        skills: {	//技能
             type: Number
         },
-        attack: {
+        attack: { //攻击
             type: Number
         },
-        survive: {
+        survive: { //生存
             type: Number
         },
     },
@@ -35,6 +38,8 @@ const schema = new mongoose.Schema({
         {
             icon: {type: String},
             name: {type: String},
+            delay: {type: String},
+            cost: {type: String},
             description: {type: String},
             tips: {type: String}
         }
@@ -42,13 +47,13 @@ const schema = new mongoose.Schema({
     items1: [       //顺风出装
         {
             type: mongoose.SchemaTypes.ObjectId,
-            rel: 'Item'
+            ref: 'Item'
         }
     ],
     items2: [       //逆风出装
         {
             type: mongoose.SchemaTypes.ObjectId,
-            rel: 'Item'
+            ref: 'Item'
         }
     ],
     usageTips: {type: String},       //使用技巧      
@@ -58,7 +63,7 @@ const schema = new mongoose.Schema({
         {
             hero: {
                 type: mongoose.SchemaTypes.ObjectId,
-                rel: 'Hero'
+                ref: 'Hero'
             },
             description: {
                 type: String

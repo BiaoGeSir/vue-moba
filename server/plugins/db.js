@@ -1,7 +1,7 @@
 module.exports = app =>{
     const mongoose = require('mongoose')
     //ip地址
-    const ip = '127.0.0.1';
+    const ip = '192.168.100.127';
     //端口号
     const port = '27017';
     //数据库名称

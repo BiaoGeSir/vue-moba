@@ -17,5 +17,5 @@ require('./routes/admin')(app)
 require('./routes/web')(app)
 
 app.listen(3000, ()=>{
-    console.log("http://localhost:3000");
+    console.log("http://192.168.100.127:3000");
 })

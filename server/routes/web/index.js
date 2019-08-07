@@ -138,6 +138,23 @@ module.exports = app =>{
     res.send(cats)
   })
 
-
+  // 获取文章数据
+  router.get('/articles/:id', async (req,res) => {
+    const data = await Article.findById(req.params.id).lean();
+    data.related = await Article.find().where({
+      categories: {$in: data.categories}
+    }).limit(2);
+    res.send(data);
+  })
+	
+	// 获取英雄数据
+	router.get('/heroes/:id', async (req,res) => {
+		const data = await Hero
+		.findById(req.params.id)
+		.populate('categories items1 items2 partners.hero')
+		.lean()
+    res.send(data)
+	})
+	
   app.use('/web/api',router)
 }

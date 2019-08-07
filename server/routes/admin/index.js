@@ -35,8 +35,11 @@ module.exports = app =>{
             case 'Category':
                 quertOptions.populate = 'parent'
                 break;
+						case 'Hero':
+						    quertOptions.populate = 'categories'
+						    break;
         }
-        const items = await req.Model.find().populate('parent').limit(10000)
+        const items = await req.Model.find().populate(quertOptions.populate).limit(10000).lean();
         res.send(items)
     })
 

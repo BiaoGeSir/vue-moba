@@ -34,7 +34,7 @@ export default{
     initAutoHeight(){
       setTimeout(() => {
         this.$refs.list.swiper.update();
-      }, 150);
+      }, 1000);
     }
   },
   created(){

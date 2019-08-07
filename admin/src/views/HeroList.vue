@@ -5,7 +5,7 @@
       <el-table-column prop="_id" label="ID" width="260"></el-table-column>
       <el-table-column prop="name" label="英雄名称"></el-table-column>
       <el-table-column prop="title" label="称号"></el-table-column>
-      <el-table-column prop="categories" label="类型"></el-table-column>
+      <el-table-column prop="categoryName" label="类型"></el-table-column>
       <el-table-column prop="icon" label="头像">
         <template slot-scope="scope">
           <img :src="scope.row.avatar" alt="" style="height:3rem;">
@@ -25,12 +25,16 @@
 export default{
   data(){
     return {
-      items:[]
+      items:[],
     }
   },
   methods:{
     async fetch(){
       const res = await this.$http.get('rest/heroes');
+			//操作数据，把每个英雄对应的 类型名称找出来，并赋值给每条英雄数据里的categoryName属性
+			res.data.forEach(item => {
+				item.categoryName = item.categories.map(v => v.name).join(',');
+			})
       this.items = res.data
     },
     async remove(row){   //删除单条数据
